@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tablon</title>
+  <!-- Google Fonts and Icons -->
+  <!-- jQuery and jQuery UI -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="boton.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="barra.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap" rel="stylesheet">
+  <!-- JavaScript Files -->
+  <script src="reloj.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  <style>
+    body{
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    }
+    </style>
+  <script>
+    $(function() {
+      // Comprueba si la cookie 'reloj' está configurada como 'true'
+      $("#clock, #search, #horaWidget").draggable({
+        stop: function(event, ui) {
+          // Guarda la posición formateada en la cookie
+          var cookieName = (this.id === "clock") ? 'reloj' : 'barra';
+Cookies.set(cookieName, true);
+
+var cookieTopName = (this.id === "clock") ? 'relojtop' : 'barratop';
+Cookies.set(cookieTopName, ui.position.top);
+
+var cookieLeftName = (this.id === "clock") ? 'relojleft' : 'barraleft';
+Cookies.set(cookieLeftName, ui.position.left);
+
+
+        }
+      }).on('dragstart', function(event) {
+        console.log('dragstart');
+      });
+
+      
+    });
+  </script>
+  <script>
+          $( function() {
+const allCookies = Object.keys(Cookies.get()); // Obtener todas las cookies
+console.log("vale "+ allCookies)
+allCookies.forEach(cookieName => {
+  if (cookieName.startsWith('htmlcustom')) {
+    const cookieValue = Cookies.get(cookieName);
+
+    if (cookieValue) {
+      const $element = $("#" + cookieName);
+
+      console.log("coso"+$element)
+      $element.draggable({
+        stop: function(event, ui) {
+          // Guarda la posición en las cookies
+          Cookies.set(cookieName + '_top', ui.position.top);
+          Cookies.set(cookieName + '_left', ui.position.left);
+        }
+      }).on('dragstart', function(event) {
+        console.log('dragstart');
+      });
+
+      // Restaura la posición guardada de la cookie
+      const topPosition = Cookies.get(cookieName + '_top');
+      const leftPosition = Cookies.get(cookieName + '_left');
+
+      if (topPosition !== undefined && leftPosition !== undefined) {
+        $element.css({
+          top: topPosition + 'px',
+          left: leftPosition + 'px'
+        });
+      }
+    } 
+  }
+});});
+
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const barraCookie = Cookies.get('barra');
+      const barraCookie2 = Cookies.get('barratop');
+      const barraCookie3 = Cookies.get('barraleft');
+      const clockElement1 = document.getElementById('search');
+      if (barraCookie === 'true') {
+        clockElement1.style.opacity = '1';
+        clockElement1.style.top = barraCookie2 + 'px';
+        clockElement1.style.left = barraCookie3 + 'px';
+      }
+    });
+  </script>
+
+
+</head>
+<body>
+  
+
+  <button id="mostrarModal" class="round-button">+</button>
+ 
+
+  <div id="miModal" class="modal">
+    <div class="modal-contenido">
+      <span class="cerrar-modal" id="cerrarModal">&times;</span>
+      <h2>cosas para añadir</h2>
+      <button id="barra">Campo de texto</button>
+
+      <input type="text" id="barraTexto" placeholder="Personaliza el texto" />
+
+      <h3>Agregar HTML Personalizado:</h3>
+      <textarea id="codigoHtml" rows="4" cols="50" placeholder="Ingresa tu código HTML aquí"></textarea>
+      <button id="agregarHtml">Añadir</button>
+      <p>Elimina el HTML Personalizado usando <a href="https://chrome.google.com/webstore/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm?hl=es">Cookie Editor</a></p>
+      <a href="/cookies-a-url.html">Comparte tu tablón (va como quiere)</a>
+    </div>
+  </div>
+  
+  <div class="wrap">
+    <div id="search" class="search" style="opacity: 0; transition: opacity 0.5s ease;">
+      <p style="font-size: 100px; color: #fff;">TEXTO</p>
+        
+    </div>
+  </div>
+  <div id="codigoPersonalizadoContainer">
+    <!-- Aquí se agregarán los bloques de código personalizado -->
+  </div>
+
+  <script>
+    const botonMostrarModal = document.getElementById('mostrarModal');
+    const modal = document.getElementById('miModal');
+    const botonCerrarModal = document.getElementById('cerrarModal');
+
+    botonMostrarModal.addEventListener('click', () => {
+        modal.style.display = 'block';
+        setTimeout(() => {
+            modal.style.opacity = '1';
+        }, 10); 
+    });
+
+    botonCerrarModal.addEventListener('click', () => {
+        modal.style.opacity = '0';
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300); 
+    });
+    
+
+
+
+    const mostrarBtn2 = document.getElementById("barra");
+    const divAsd2 = document.getElementById("search");
+    const barraTexto = document.getElementById("barraTexto");
+
+    mostrarBtn2.addEventListener("click", function () {
+      const opacity = window.getComputedStyle(divAsd2).getPropertyValue("opacity");
+
+      if (opacity === "0") {
+        divAsd2.style.opacity = "1";
+        Cookies.set('barra', 'true');
+        const textoPersonalizado = barraTexto.value;
+        if (textoPersonalizado) {
+          divAsd2.querySelector("p").textContent = textoPersonalizado;
+          Cookies.set('barraTexto', textoPersonalizado);
+        }
+      } else {
+        divAsd2.style.opacity = "0";
+        Cookies.set('barra', 'false');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const textoCookie = Cookies.get('barraTexto');
+      if (textoCookie) {
+        barraTexto.value = textoCookie;
+        const pElement = document.querySelector("#search p");
+        pElement.textContent = textoCookie;
+      }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+  // Obtener el contenedor
+  const codigoPersonalizadoContainer = document.getElementById("codigoPersonalizadoContainer");
+
+  // Función para crear y agregar un div personalizado con un id igual al nombre de la cookie
+  function agregarDivPersonalizado(nombreCookie, codigoHtml) {
+    // Crear un elemento div para contener el HTML personalizado
+    const div = document.createElement("div");
+    div.innerHTML = codigoHtml;
+    div.id = nombreCookie;
+    div.className = nombreCookie; // Establecer el id del div igual al nombre de la cookie
+    codigoPersonalizadoContainer.appendChild(div);
+  }
+
+  // Agregar divs personalizados al cargar la página
+
+  const allCookies = Object.keys(Cookies.get()); // Obtener todas las cookies
+
+const cookies = allCookies.filter(cookieName => cookieName.startsWith('htmlcustom') && !cookieName.includes('_'));
+for (const cookieName of cookies) {
+  agregarDivPersonalizado(cookieName, Cookies.get(cookieName));
+}
+  // Agregar un div personalizado al hacer clic en el botón
+  const agregarHtmlBtn = document.getElementById("agregarHtml");
+  const codigoHtmlTextarea = document.getElementById("codigoHtml");
+  
+  agregarHtmlBtn.addEventListener("click", function () {
+    const codigoHtml = codigoHtmlTextarea.value;
+  
+    if (codigoHtml) {
+      // Crear un nombre único para la cookie
+      const nombreCookie = `htmlcustom${new Date().getTime()}`;
+      
+      // Guardar el HTML personalizado en la cookie con el nombre único
+      Cookies.set(nombreCookie, codigoHtml);
+      
+      // Agregar el div personalizado al contenedor
+      agregarDivPersonalizado(nombreCookie, codigoHtml);
+
+      // Limpiar el contenido del textarea después de agregarlo
+      codigoHtmlTextarea.value = "";
+    }
+    location.reload();
+  });
+});
+
+
+
+
+  </script>
+</body>
+</html>

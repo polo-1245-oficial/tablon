@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Incluye la biblioteca js-cookies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+</head>
+<body>
+    <a href="https://tablon.tux.software">Volver</a>
+
+    <script>
+        // Obtén la URL actual del navegador
+        const urlActual = window.location.href;
+
+        // Decodifica la URL
+        const urlDecodificada = decodeURIComponent(urlActual);
+
+        // Reemplaza los '&' por '%$%'
+        const urlReemplazada = urlDecodificada.replace(/&/g, '%$%');
+
+        // Divide la URL en fragmentos usando '%$%' como separador
+        const fragmentos = urlReemplazada.split('%$%');
+
+        // Itera a través de los fragmentos y divide cada fragmento en pares de clave-valor usando '=' como separador
+        fragmentos.forEach((fragmento, indice) => {
+            const pares = fragmento.split('=');
+            
+            // Asegúrate de que haya al menos dos elementos en el fragmento (clave y valor)
+            if (pares.length >= 2) {
+                const clave = pares[0];
+                const valor = pares[1];
+                
+                // Almacena el valor en una cookie con el nombre de la clave
+                Cookies.set(clave, valor);
+            }
+        });
+
+        // Muestra todas las cookies en la consola para verificar
+
+        console.log(Cookies.get());
+        alert("Cookies almacenadas, ya puedes salir.")
+    </script>
+</body>
+</html>

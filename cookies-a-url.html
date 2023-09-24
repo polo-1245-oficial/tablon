@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertir Cookies</title>
+    <!-- Incluye la biblioteca js-cookies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+</head>
+<body>
+    <h1>Convertidor Beta</h1>
+
+    <!-- Botón para obtener las cookies y convertirlas en enlaces -->
+    <button onclick="convertirCookiesAEnlaces()">Convertir</button>
+
+    <!-- Contenedor para mostrar los enlaces -->
+    <div id="enlacesContainer"></div>
+
+    <script>
+    // Función para obtener todas las cookies y convertirlas en enlaces
+    function convertirCookiesAEnlaces() {
+        // Obtiene todas las cookies en un objeto
+        const todasLasCookies = Cookies.get();
+
+        // Crea una cadena de consulta en formato "nombre_cookie=valor_cookie" y las une con "&"
+        const cookiesEnFormatoURL = Object.keys(todasLasCookies)
+            .map(nombreCookie => `${nombreCookie}=${encodeURIComponent(todasLasCookies[nombreCookie])}`)
+            .join("&");
+
+        // Especifica la URL de destino
+        const urlDestino = "http://localhost:8000/cookies-setear.html";
+
+        // Agrega la cadena de consulta como un parámetro a la URL de destino
+        const enlace = `${urlDestino}?=${encodeURIComponent(cookiesEnFormatoURL)}`;
+
+        // Muestra el enlace en el contenedor
+        const enlacesContainer = document.getElementById("enlacesContainer");
+        enlacesContainer.innerHTML = `<a href="${enlace}">Enlace con Cookies</a>`;
+    }
+    </script>
+</body>
+</html>
